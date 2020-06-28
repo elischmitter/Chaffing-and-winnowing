@@ -29,8 +29,14 @@ void  makeHMAC(char* message,char* key,char* MAC ,int blockSize){
 int checkHMAC(char* message,char* key,char* recevedMAC){
   char MAC[MD5_DIGEST_LENGTH];
   makeHMAC(message,key,MAC,MD5_DIGEST_LENGTH);
-  if(!(strcmp(recevedMAC,MAC))){
-    return 1;
-  }
-  return 0;
+   for(size_t i=0;i<sizeof(MAC);++i)  printf("%02x",MAC[i]);
+   printf("\n");
+  return((strcmp(recevedMAC,MAC)));
+}
+void main(){
+char MAC[MD5_DIGEST_LENGTH];
+ makeHMAC("123","123",MAC,MD5_DIGEST_LENGTH);
+ for(size_t i=0;i<sizeof(MAC);++i)  printf("%02x",MAC[i]);
+ printf("\n");
+ printf("%d", checkHMAC("123","123",MAC));
 }
