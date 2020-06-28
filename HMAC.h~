@@ -1,0 +1,6 @@
+#ifndef HMAC_H
+#define HMAC_H
+
+int HMAC(char* message,char* key,char* receveMAC);
+
+#endif
