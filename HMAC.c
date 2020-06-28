@@ -1,10 +1,10 @@
 #include "HMAC.h"
 
-void  makeHMAC(char* message,char* key,char* MAC ,int blockSize){
-  char kPrime[blockSize];
-  if( strlen(key) >  MD5_DIGEST_LENGTH)
+void  makeHMAC(const char* message, const char* key,unsigned char*  MAC ,int blockSize){
+  unsigned char kPrime[blockSize];
+  if( strlen(key) > 20)
     {
-    MD5(key, strlen(key), kPrime); 
+      RIPEMD160((const unsigned char*) key, (unsigned long ) strlen(key),kPrime); 
     }else
     {
       strcpy(kPrime,key);
@@ -20,23 +20,23 @@ void  makeHMAC(char* message,char* key,char* MAC ,int blockSize){
   char catFirst[strlen(message)+blockSize];
   strcpy(catFirst,ipad);
   strcat(catFirst,message);
-  MD5(catFirst,strlen(catFirst),first);
+  RIPEMD160((const unsigned char*) catFirst,(unsigned long )strlen(catFirst),first);
   char catSecond[blockSize*2];
   strcpy(catSecond,opad);
-  MD5(catSecond,(size_t) blockSize*2,MAC);
+  RIPEMD160((const unsigned char*) catSecond, (unsigned long )blockSize*2,MAC);
 }
 
-int checkHMAC(char* message,char* key,char* recevedMAC){
-  char MAC[MD5_DIGEST_LENGTH];
-  makeHMAC(message,key,MAC,MD5_DIGEST_LENGTH);
-   for(size_t i=0;i<sizeof(MAC);++i)  printf("%02x",MAC[i]);
+int checkHMAC(char* message,char* key,unsigned char* recevedMAC){
+  unsigned char MAC[20];
+  makeHMAC(message,key,MAC,20);
+    printf("%s",MAC);
    printf("\n");
   return((strcmp(recevedMAC,MAC)));
 }
 void main(){
-char MAC[MD5_DIGEST_LENGTH];
- makeHMAC("123","123",MAC,MD5_DIGEST_LENGTH);
- for(size_t i=0;i<sizeof(MAC);++i)  printf("%02x",MAC[i]);
+unsigned char MAC[20];
+ makeHMAC("123","123",MAC,20);
+ printf("%s",MAC);
  printf("\n");
  printf("%d", checkHMAC("123","123",MAC));
 }
