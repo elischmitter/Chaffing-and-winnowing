@@ -1,6 +1,6 @@
 #include "HMAC.h"
 
-char*  makeHMAC(char* message,char* key,int blockSize){
+void  makeHMAC(char* message,char* key,char* MAC ,int blockSize){
   char kPrime[blockSize];
   if( strlen(key) >  MD5_DIGEST_LENGTH)
     {
@@ -22,15 +22,13 @@ char*  makeHMAC(char* message,char* key,int blockSize){
   strcat(catFirst,message);
   MD5(catFirst,strlen(catFirst),first);
   char catSecond[blockSize*2];
-  strcpy(catSecond,ipad);
-  char HMAC[blockSize];
-  MD5(catSecond,(size_t) blockSize*2,HMAC);
-  
-  return HMAC;
+  strcpy(catSecond,opad);
+  MD5(catSecond,(size_t) blockSize*2,MAC);
 }
 
 int checkHMAC(char* message,char* key,char* recevedMAC){
-  char* MAC= makeHMAC(message,key,MD5_DIGEST_LENGTH);
+  char MAC[MD5_DIGEST_LENGTH];
+  makeHMAC(message,key,MAC,MD5_DIGEST_LENGTH);
   if(!(strcmp(recevedMAC,MAC))){
     return 1;
   }

@@ -8,6 +8,6 @@
 
 int checkHMAC(char* message,char* key,char* recevedMAC);
 
-char*  makeHMAC(char* message, char* key,int blockSize);
+void  makeHMAC(char* message, char* key,char* MAC,int blockSize);
 
 #endif
