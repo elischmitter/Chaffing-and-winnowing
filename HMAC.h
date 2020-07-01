@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 
-int checkHMAC(char* message,char* key, unsigned char* recevedMAC);
+int checkHMAC(char* message,char* key,  char* recevedMAC);
 
-void  makeHMAC(const char* message,const char* key,unsigned char* MAC,int blockSize);
+void  makeHMAC(const char* message,const char* key, unsigned char* MAC,int blockSize);
 
 #endif
