@@ -7,21 +7,21 @@ int Chaffing(FILE *in, FILE *out, const char*key){
 	fputc(fake,out);
 	fputc(',',out);
 	char newfake = (char) random_uint(195)+32;
-	while (newfake = fake){
+	while (newfake == fake){
 	  newfake = (char) random_uint(195)+32;
-	
 	}
 	 unsigned char MAC[20];
 	makeHMAC(&fake,key,MAC,20);
 	MAC[17]='\0';
-	fputs(MAC,out);	
+        for(size_t i=0; i< strlen(MAC); i++ ) fprintf(out,"%02x",MAC[i]);	
       }else{
 	fputc(buff,out);
 	unsigned char MAC[20];
 	makeHMAC(&buff,key,MAC,20);
 	MAC[17]='\0';
 	fputc(',',out);
-	fputs(MAC,out);
+	for(size_t i=0; i< strlen(MAC); i++ ) fprintf(out,"%02x",MAC[i]);
+	//fputs((int*)MAC,out);
 	buff = fgetc(in);
       }
       fputc('\n',out);
@@ -43,11 +43,19 @@ unsigned int random_uint(unsigned int limit) {
     } while (u.i < (-limit % limit)); /* u.i < (2**size % limit) */
     return u.i % limit;
 }
+/* int windowing(FILE *in, FILE *out,const char* key){ */
+/*   char buff = fgets(in); */
+/*   while(buff!=EOF){ */
+    
+    
+/*   } */
+  
+/* } */
 
 
 int main(int argc, char *argv[]){
   if(argc<2){
-    printf("usage file in, file out, Key");
+    printf("usage file in, file out, Key, chaffing(0) or windowing (1)");
     return -1;
   }
   FILE* in=fopen(argv[1],"r+");
@@ -55,6 +63,13 @@ int main(int argc, char *argv[]){
   if(in == NULL || out == NULL ){
     printf("error while opeing or creating files");
   }
-  Chaffing(in,out,argv[3]);
-  return 1;
+  if(argv[4][0]=='0'){
+    Chaffing(in,out,argv[3]);
+    return 1;
+  }
+  else if(argv[4][0]=='1') {
+    //    windowing(in,out,argv[3]);
+    return 1;
+  }
+  return 0;
 }
