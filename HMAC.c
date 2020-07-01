@@ -44,16 +44,16 @@ int checkHMAC(char* message,char* key,  char* recevedMAC){
  printf("\n");
   return((strcmp(recevedMAC,MAC)));
 }
-int main(){
- unsigned char MAC[20];
- makeHMAC("12345","12345",MAC,20);
- MAC[17]='\0';
- printf("%s\n",MAC);
- printf("%d\n", checkHMAC("12345","12345",MAC));
-   //  printf("%s\n",MAC);
- for(int i = 0; i<strlen(MAC);i++){
-   printf("%02x",(unsigned char) MAC[i]);
- }
- //checkHMAC("123","123",MAC);
-}
+/* int main(){ */
+/*  unsigned char MAC[20]; */
+/*  makeHMAC("12345","12345",MAC,20); */
+/*  MAC[17]='\0'; */
+/*  printf("%s\n",MAC); */
+/*  printf("%d\n", checkHMAC("12345","12345",MAC)); */
+/*    //  printf("%s\n",MAC); */
+/*  for(int i = 0; i<strlen(MAC);i++){ */
+/*    printf("%02x",(unsigned char) MAC[i]); */
+/*  } */
+/*  //checkHMAC("123","123",MAC); */
+/* } */
 
