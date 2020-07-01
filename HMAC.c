@@ -41,7 +41,6 @@ int checkHMAC(char* message,char* key,  char* recevedMAC){
  for(int i = 0; i<strlen(MAC);i++){
    printf("%02x",(unsigned char) MAC[i]);
  }
- printf("\n");
   return((strcmp(recevedMAC,MAC)));
 }
 /* int main(){ */
