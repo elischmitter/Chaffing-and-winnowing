@@ -6,7 +6,12 @@ int Chaffing(FILE *in, FILE *out, const char*key){
 	char fake = (char) random_uint(195)+32;
 	fputc(fake,out);
 	fputc(',',out);
-	unsigned char MAC[20];
+	char newfake = (char) random_uint(195)+32;
+	while (newfake = fake){
+	  newfake = (char) random_uint(195)+32;
+	
+	}
+	 unsigned char MAC[20];
 	makeHMAC(&fake,key,MAC,20);
 	MAC[17]='\0';
 	fputs(MAC,out);	
